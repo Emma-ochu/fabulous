@@ -4,7 +4,9 @@ import heroImage from "../../assets/Woman.png";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[calc(100vh-4rem)] overflow-hidden bg-[#FAF8F4] flex items-center">
+    <section 
+    id="hero"
+    className="relative min-h-[calc(100vh-4rem)] overflow-hidden bg-[#FAF8F4] flex items-center">
       <div className="max-w-[1400px] mx-auto px-6 md:px-16 pt-6 pb-16 md:pt-14 md:pb-24 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center w-full">
         
         {/* Left Column (Content) */}
@@ -33,7 +35,7 @@ const Hero = () => {
             </svg>
           </div>
 
-          {/* Serif display headline — the one place type gets to be quiet-luxurious */}
+          {/* Serif display headline */}
           <h1 className="mt-5 sm:mt-6 font-serif text-3xl sm:text-5xl lg:text-6xl font-normal text-[#2E2E2E] leading-[1.1] tracking-tight">
             {heroContent.title}
           </h1>
@@ -43,28 +45,36 @@ const Hero = () => {
           </p>
 
           {/* Benefits List */}
-          <div className="mt-6 sm:mt-8 space-y-3 sm:space-y-4">
+          <ul className="mt-6 sm:mt-8 space-y-3 sm:space-y-4" role="list">
             {heroBenefits.map((benefit) => (
-              <div key={benefit} className="flex items-center gap-3">
+              <li key={benefit} className="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-[#C9A227]/5 transition-colors">
                 <CheckCircle2
                   className="w-5 h-5 text-[#C9A227] flex-shrink-0"
                   aria-hidden="true"
                 />
-                <p className="text-gray-700 text-sm sm:text-base font-medium">
+                <span className="text-gray-700 text-sm sm:text-base font-medium">
                   {benefit}
-                </p>
-              </div>
+                </span>
+              </li>
             ))}
-          </div>
+          </ul>
           
           {/* Action Buttons */}
           <div className="mt-6 flex flex-wrap gap-4">
-            <button className="flex-1 sm:flex-initial text-center bg-[#2E2E2E] text-white px-6 py-3.5 rounded-xl hover:bg-[#C9A227] active:scale-[0.98] transition-all duration-200 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2">
+            <a
+              href="https://wa.me/+2347048603741"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center flex-1 sm:flex-initial text-center bg-[#2E2E2E] text-white px-6 py-3.5 rounded-xl hover:bg-[#C9A227] active:scale-[0.98] transition-all duration-200 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2"
+            >
               {heroContent.primaryButton}
-            </button>
-            <button className="flex-1 sm:flex-initial text-center px-6 py-3.5 bg-transparent text-[#C9A227] border-2 border-[#C9A227] rounded-xl hover:bg-[#C9A227] hover:text-white active:scale-[0.98] transition-all duration-300 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2">
+            </a>
+            <a
+              href="#products"
+              className="inline-flex items-center justify-center flex-1 sm:flex-initial text-center px-6 py-3.5 bg-transparent text-[#C9A227] border-2 border-[#C9A227] rounded-xl hover:bg-[#C9A227] hover:text-white active:scale-[0.98] transition-all duration-300 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2"
+            >
               {heroContent.secondaryButton}
-            </button>
+            </a>
           </div>
         </div>
 
@@ -75,6 +85,7 @@ const Hero = () => {
             <img 
               src={heroImage} 
               alt="Medicube Night Mask"
+              loading="eager"
               className="relative w-full h-full object-cover rounded-3xl border-4 border-white shadow-lg transition-all duration-500 ease-out group-hover:scale-[1.03] group-hover:shadow-2xl active:scale-95"
             />
           </div>

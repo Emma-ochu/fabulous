@@ -3,6 +3,9 @@ import Navbar from "../components/layout/Navbar";
 import Hero from "../components/home/Hero";
 import FeaturedProducts from "../components/home/FeaturedProducts";
 import Medicube from "../components/home/Medicube";
+import Sadoer from "../components/home/Sadoer";
+import Testimonials from "../components/home/Testimonials";
+import Faq from "../components/home/Faq";
 const Home = () => {
     return(
         <>
@@ -10,6 +13,9 @@ const Home = () => {
         <Hero/>
         <FeaturedProducts/>
         <Medicube/>
+        <Sadoer/>
+        <Testimonials/>
+        <Faq/>
         </>
     );
 };

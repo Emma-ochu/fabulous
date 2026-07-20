@@ -1,23 +1,25 @@
 
 export const navLinks = [
 {
-    name: "Medicube",
-    href: "/#",
-},
-{
-    name: "SADOER",
-    href: "/#"
+    name: "Home",
+    href: "/#hero",
 },
 {
     name: "Collection",
-    href: "/#" 
+    href: "/#products",
 },
 {
-    name: "Contact",
-    href: "/#"
+    name: "Medicube",
+    href: "/#medicube" 
 },
 {
-    name: "Best Sellers",
-    href: "/#"
+    name: "Sadoer",
+    href: "/#sadoer"
+},
+{ name: "Reviews", href: "#testimonials" },
+{ name: "FAQ", href: "#faq" },
+{
+    name: " Contact",
+    href: "/#contact"
 },
 ];

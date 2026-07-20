@@ -16,3 +16,13 @@
     }
   }
 }
+
+@keyframes draw-underline {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+.animate-draw-underline {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-underline 1.2s ease-out forwards;
+}
