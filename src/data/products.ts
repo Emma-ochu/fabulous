@@ -8,7 +8,7 @@ export const featuredProducts = [
     id: 1,
     name: "SADOER  Repair Cream",
     brand: "Best Seller",
-    price: 29.99,
+    price: 8000,
     image: blue,
     description: "A luxurious face cream enriched with collagen to rejuvenate and hydrate your skin.",
     badge: "Best Seller",
@@ -18,7 +18,7 @@ export const featuredProducts = [
     id: 2,
     name: "Sudocrem",
     brand: "Best Seller",
-    price: 19.99,
+    price: 6000,
     image: sudocrem,
     description:
       "A soothing cream trusted for protecting and calming irritated, dry, and sensitive skin.",
@@ -29,7 +29,7 @@ export const featuredProducts = [
     id: 3,
     name: "Kormesic Cream",
     brand: "Best Seller",
-    price: 24.99,
+    price: 5000,
     image: kormesic,
     description:
       "A nourishing skincare cream designed to moisturize and promote healthier-looking skin.",
@@ -40,7 +40,7 @@ export const featuredProducts = [
     id: 4,
     name: "Turmeric Toner (Face Edition)",
     brand: "Best Seller",
-    price: 29.99,
+    price: 15000,
     image: turmericFace,
     description:
       "A brightening turmeric toner featuring a premium formula for smoother, radiant-looking skin.",

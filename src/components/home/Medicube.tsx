@@ -49,12 +49,12 @@ const Medicube = () => {
 
             {/* Action Buttons */}
             <div className="mt-6">
-              <button
-                type="button"
+              <a
+                href="#order"
                 className="inline-flex text-center bg-[#2E2E2E] text-white px-6 py-3.5 rounded-xl hover:bg-[#C9A227] active:scale-[0.98] transition-all duration-200 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2"
               >
                 {medicube.button}
-              </button>
+              </a>
             </div>
           </div>
 

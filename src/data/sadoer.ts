@@ -18,7 +18,7 @@ export const sadoerProduct = [
     id: 2,
     name: "Collagen Face Serum",
     brand: "SADOER",
-    price: 25000,
+    price: 5000,
     image: faceLiftSerum,
     description:
       "A potent serum infused with collagen to help reduce the appearance of fine lines and wrinkles, promoting a youthful complexion.",
@@ -48,7 +48,7 @@ export const sadoerProduct = [
     id: 5,
     name: "Sadoer Repair cream",
     brand: "SADOER",
-    price: 20000,
+    price: 8000,
     image:blue,
     description:
     "A luxurious face cream enriched with collagen to rejuvenate and hydrate your skin.",  }

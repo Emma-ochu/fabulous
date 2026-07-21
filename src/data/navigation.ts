@@ -4,10 +4,10 @@ export const navLinks = [
     name: "Home",
     href: "/#hero",
 },
-{
-    name: "Collection",
-    href: "/#products",
-},
+// {
+//     name: "Collection",
+//     href: "/#products",
+// },
 {
     name: "Medicube",
     href: "/#medicube" 

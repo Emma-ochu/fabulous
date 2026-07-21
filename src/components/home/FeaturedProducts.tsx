@@ -52,7 +52,7 @@ const FeaturedProducts = () => {
                   ₦{product.price}
                 </span>
                 <a
-                  href={`https://wa.me/+2347048603741?text=${encodeURIComponent(
+                  href={`https://wa.me/2348108384751?text=${encodeURIComponent(
                     `Hi! I'm interested in ordering ${product.name}.`
                   )}`}
                   target="_blank"

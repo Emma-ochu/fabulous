@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ShoppingBag } from "lucide-react";
-// import faqImage from "../../assets/faq-product.png";
+import faqImage from "../../assets/image.webp";
 
 const faqs = [
   {
@@ -90,10 +90,10 @@ const FAQ = () => {
             <div className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
               <div className="aspect-[4/5] w-full overflow-hidden bg-gray-50">
                 <img
-                  // src={faqImage}
+                  src={faqImage}
                   alt="Happy customer with Medicube product"
                   loading="lazy"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <div className="p-6 md:p-8 text-center">
@@ -104,9 +104,7 @@ const FAQ = () => {
                   Join thousands of ladies who already trust Fabulouss to look younger and fresher.
                 </p>
                 <a
-                  href="https://wa.me/YOUR_NUMBER"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#order"
                   className="mt-6 inline-flex items-center justify-center gap-2 w-full bg-[#C9A227] text-white px-6 py-4 rounded-xl hover:bg-[#b08d1f] active:scale-[0.98] transition-all duration-200 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2"
                 >
                   <ShoppingBag className="w-4 h-4" />

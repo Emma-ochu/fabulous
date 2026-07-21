@@ -62,7 +62,7 @@ const Hero = () => {
           {/* Action Buttons */}
           <div className="mt-6 flex flex-wrap gap-4">
             <a
-              href="https://wa.me/+2347048603741"
+              href="https://wa.me/2348108384751"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center flex-1 sm:flex-initial text-center bg-[#2E2E2E] text-white px-6 py-3.5 rounded-xl hover:bg-[#C9A227] active:scale-[0.98] transition-all duration-200 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2"

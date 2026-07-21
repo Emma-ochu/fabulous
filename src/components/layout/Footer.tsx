@@ -1,7 +1,132 @@
+import { MapPin, Phone, Mail, MessageCircle } from "lucide-react";
+
 const Footer = () => {
   return (
-    <footer className="py-8 text-center">
-      © 2026 Fabulous Skin Care Mart
+    <footer
+      id="contact"
+      className="bg-[#2E2E2E] text-white"
+    >
+      {/* Top accent line */}
+      <div className="h-1 bg-[#C9A227]" />
+
+      <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
+
+        <div className="grid md:grid-cols-3 gap-12 md:gap-10">
+
+          {/* Brand */}
+          <div className="md:col-span-1">
+            <h3 className="font-serif text-2xl md:text-3xl tracking-tight">
+              Fabulouss
+            </h3>
+            <p className="mt-1 text-xs uppercase tracking-[0.3em] text-[#C9A227] font-medium">
+              Authentic Korean Skincare
+            </p>
+
+            <p className="mt-6 text-gray-400 text-sm leading-relaxed max-w-sm">
+              Carefully curated skincare products to help you achieve healthy, glowing, and radiant skin every day.
+            </p>
+
+            {/* Social icons */}
+            <div className="mt-6 flex gap-3">
+              <a
+                href="https://wa.me/2348108384751"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#C9A227] hover:border-[#C9A227] transition-all duration-300"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-sm uppercase tracking-[0.2em] text-[#C9A227] font-semibold">
+              Quick Links
+            </h4>
+            <ul className="mt-6 space-y-3">
+              {[
+                { name: "Home", href: "#hero" },
+                { name: "Products", href: "#products" },
+                { name: "Medicube", href: "#medicube" },
+                { name: "Sadoer", href: "#sadoer" },
+                { name: "Reviews", href: "#testimonials" },
+                { name: "FAQ", href: "#faq" },
+              ].map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="text-sm uppercase tracking-[0.2em] text-[#C9A227] font-semibold">
+              Contact Us
+            </h4>
+
+            <div className="mt-6 space-y-4">
+              <a
+                href="https://wa.me/2348108384751"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 group"
+              >
+                <div className="w-10 h-10 rounded-full bg-[#25D366]/10 flex items-center justify-center group-hover:bg-[#25D366]/20 transition-colors">
+                  <Phone className="w-4 h-4 text-[#25D366]" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">WhatsApp</p>
+                  <p className="text-sm text-white group-hover:text-[#C9A227] transition-colors">0805 857 5428</p>
+                </div>
+              </a>
+
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                  <Mail className="w-4 h-4 text-gray-400" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">Email</p>
+                  <p className="text-sm text-gray-300">hello@fabulouss.com</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                  <MapPin className="w-4 h-4 text-gray-400" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">Location</p>
+                  <p className="text-sm text-gray-300">Lagos, Nigeria</p>
+                </div>
+              </div>
+            </div>
+
+            <p className="mt-6 text-xs text-gray-500 leading-relaxed">
+              Available every day to answer your skincare questions and take your orders.
+            </p>
+          </div>
+
+        </div>
+
+        {/* Bottom bar */}
+        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-gray-500">
+            © 2026 Fabulouss Skin Care Mart. All rights reserved.
+          </p>
+          <p className="text-xs text-gray-600">
+            Designed with care for beautiful skin.
+          </p>
+        </div>
+
+      </div>
     </footer>
   );
 };
