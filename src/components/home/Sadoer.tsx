@@ -57,14 +57,14 @@ const Sadoer = () => {
                   ₦{product.price.toLocaleString()}
                 </span>
                 <a
-                  href={`https://wa.me/+2347048603741?text=${encodeURIComponent(
+                  href={`https://wa.me/2347048603741?text=${encodeURIComponent(
                     `Hi! I'm interested in ordering ${product.name} (₦${product.price.toLocaleString()}).`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-sm font-medium text-[#C9A227] hover:text-white hover:bg-[#C9A227] border border-[#C9A227] px-4 py-2 rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2"
                 >
-                  <ShoppingBag className="w-4 h-4" />
+                  <ShoppingBag className="w-4 h-4" aria-hidden="true" />
                   Order on WhatsApp
                 </a>
               </div>

@@ -2,7 +2,8 @@
 
 @theme {
   --font-serif: "Fraunces", serif;
-
+  --font-logo: "Italiana", serif;
+  
   --animate-draw-underline: draw-underline 0.8s 0.3s ease-out forwards;
 
   @keyframes draw-underline {
@@ -17,10 +18,6 @@
   }
 }
 
-@keyframes draw-underline {
-  from { stroke-dashoffset: 1; }
-  to { stroke-dashoffset: 0; }
-}
 .animate-draw-underline {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;

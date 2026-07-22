@@ -37,7 +37,7 @@ export const sadoerProduct = [
   {
     id: 4,
     name: "WHITEN ANTI-AGING",
-    brand: "Best Seller",
+    brand: "SADOER",
     price: 40000,
     image: set,
     description:

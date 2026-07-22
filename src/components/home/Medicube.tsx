@@ -66,7 +66,7 @@ const Medicube = () => {
                 src={nightMask}
                 alt="Medicube Kojic Acid Night Wrapping Mask"
                 loading="eager"
-                className="relative w-full h-full object-contain rounded-3xl border-4 border-white shadow-lg transition-all duration-500 ease-out group-hover:scale-[1.03] group-hover:shadow-2xl active:scale-95"
+                className="relative w-full h-full object-cover rounded-3xl border-4 border-white shadow-lg transition-all duration-500 ease-out group-hover:scale-[1.03] group-hover:shadow-2xl active:scale-95"
               />
             </div>
           </div>

@@ -13,6 +13,15 @@ const orderSchema = z.object({
 
 type OrderForm = z.infer<typeof orderSchema>;
 
+const emptyForm: OrderForm = {
+  name: "",
+  phone: "",
+  secondPhone: "",
+  state: "",
+  address: "",
+  quantity: "" as OrderForm["quantity"],
+};
+
 const quantityOptions = [
   { value: "1", label: "1 Set", price: 25000 },
   { value: "2", label: "2 Sets", price: 44000 },
@@ -27,13 +36,18 @@ const states = [
 ];
 
 const OrderForm = () => {
-  const [formData, setFormData] = useState<Partial<OrderForm>>({});
+  const [formData, setFormData] = useState<OrderForm>(emptyForm);
   const [errors, setErrors] = useState<Partial<Record<keyof OrderForm, string>>>({});
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (field: keyof OrderForm, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: undefined }));
+  };
+
+  const handleReset = () => {
+    setSubmitted(false);
+    setFormData(emptyForm);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -76,7 +90,7 @@ const OrderForm = () => {
       .join("\n");
 
     const encoded = encodeURIComponent(message);
-    window.open(`https://wa.me/2348108384751?text=${encoded}`, "_blank");
+    window.open(`https://wa.me/2347048603741?text=${encoded}`, "_blank");
     setSubmitted(true);
   };
 
@@ -94,10 +108,7 @@ const OrderForm = () => {
           </p>
           <button
             type="button"
-            onClick={() => {
-              setSubmitted(false);
-              setFormData({});
-            }}
+            onClick={handleReset}
             className="text-[#C9A227] hover:text-white transition-colors text-sm"
           >
             Place another order
@@ -133,7 +144,7 @@ const OrderForm = () => {
             </label>
             <input
               type="text"
-              value={formData.name || ""}
+              value={formData.name}
               onChange={(e) => handleChange("name", e.target.value)}
               className={`w-full px-4 py-3 rounded-xl border ${
                 errors.name ? "border-red-300 ring-1 ring-red-300" : "border-gray-200"
@@ -154,7 +165,7 @@ const OrderForm = () => {
             </label>
             <input
               type="tel"
-              value={formData.phone || ""}
+              value={formData.phone}
               onChange={(e) => handleChange("phone", e.target.value)}
               className={`w-full px-4 py-3 rounded-xl border ${
                 errors.phone ? "border-red-300 ring-1 ring-red-300" : "border-gray-200"
@@ -175,7 +186,7 @@ const OrderForm = () => {
             </label>
             <input
               type="tel"
-              value={formData.secondPhone || ""}
+              value={formData.secondPhone}
               onChange={(e) => handleChange("secondPhone", e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#C9A227] focus:ring-1 focus:ring-[#C9A227] focus:outline-none transition-colors"
               placeholder="Backup number"
@@ -188,7 +199,7 @@ const OrderForm = () => {
               Your State <span className="text-red-500">*</span>
             </label>
             <select
-              value={formData.state || ""}
+              value={formData.state}
               onChange={(e) => handleChange("state", e.target.value)}
               className={`w-full px-4 py-3 rounded-xl border ${
                 errors.state ? "border-red-300 ring-1 ring-red-300" : "border-gray-200"
@@ -214,7 +225,7 @@ const OrderForm = () => {
               Delivery Address <span className="text-red-500">*</span>
             </label>
             <textarea
-              value={formData.address || ""}
+              value={formData.address}
               onChange={(e) => handleChange("address", e.target.value)}
               rows={3}
               className={`w-full px-4 py-3 rounded-xl border ${

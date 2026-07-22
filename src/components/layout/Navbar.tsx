@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { navLinks } from "../../data/navigation";
 import { Menu, X } from "lucide-react";
+import Logo from "../home/Logo";// adjust path to match your structure
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,10 +47,9 @@ const Navbar = () => {
           <a
             href="#home"
             onClick={(e) => handleNavClick(e, "#home")}
-            className="font-serif text-lg sm:text-xl md:text-2xl font-normal tracking-tight text-[#2E2E2E] shrink-0"
+            className="shrink-0 text-2xl sm:text-3xl md:text-4xl"
           >
-            <span className="md:hidden">Fabulouss</span>
-            <span className="hidden md:inline">Fabulouss Skin Care Mart</span>
+            <Logo />
           </a>
 
           {/* Desktop Navigation */}
@@ -94,7 +94,6 @@ const Navbar = () => {
       {/* Mobile Menu Overlay */}
       {isOpen && (
         <div className="md:hidden fixed inset-0 z-40" aria-hidden={!isOpen}>
-          {/* Backdrop */}
           <div
             className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-[400ms] ${
               isAnimating ? "opacity-100" : "opacity-0"
@@ -102,7 +101,6 @@ const Navbar = () => {
             onClick={closeMenu}
           />
 
-          {/* Drawer Panel */}
           <div
             className={`absolute top-0 right-0 h-full w-[240px] max-w-[80vw] bg-[#FAF8F4] shadow-2xl transition-transform duration-[400ms] ease-out ${
               isAnimating ? "translate-x-0" : "translate-x-full"
@@ -110,24 +108,16 @@ const Navbar = () => {
           >
             {/* Drawer Header - Logo */}
             <div className="flex flex-col items-center justify-center px-6 pt-20 pb-6 border-b border-[#C9A227]/20">
-              <span className="font-serif text-xl font-normal text-[#2E2E2E] tracking-tight">
-                Fabulouss
-              </span>
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#C9A227] mt-1 font-medium">
-                Authentic Korean Skincare
-              </span>
+              <Logo tagline className="items-center text-xl" />
             </div>
 
-            {/* Nav Links */}
             <nav className="px-4 py-6">
               <ul className="flex flex-col gap-1">
                 {navLinks.map(({ name, href }, index) => (
                   <li
                     key={name}
                     className={`transition-all duration-300 ${
-                      isAnimating
-                        ? "translate-x-0 opacity-100"
-                        : "translate-x-8 opacity-0"
+                      isAnimating ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"
                     }`}
                     style={{
                       transitionDelay: isAnimating ? `${150 + index * 60}ms` : "0ms",

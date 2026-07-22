@@ -13,6 +13,7 @@ const testimonials = [
     text: "I was dealing with dark spots and uneven skin tone for months. After using the Medicube Night Mask consistently, my skin is so much clearer and brighter. The difference is honestly unbelievable!",
     image: beforeAfter1,
     product: "Medicube Night Wrapping Mask",
+    isBeforeAfter: true,
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ const testimonials = [
     text: "My skin has never looked this good. The glow is real! I get compliments everywhere I go now. This is my holy grail product and I'll never stop using it.",
     image: after2,
     product: "Sadoer Collagen Set",
+    isBeforeAfter: false,
   },
   {
     id: 3,
@@ -31,6 +33,7 @@ const testimonials = [
     text: "I had terrible acne scars and textured skin. I was so insecure about it. After 4 weeks of using these products, my skin texture has improved dramatically and my scars are fading. I'm so grateful!",
     image: beforeAfter3,
     product: "Medicube Kojic Acid Mask",
+    isBeforeAfter: true,
   },
 ];
 
@@ -39,6 +42,11 @@ const Testimonials = () => {
 
   const next = () => setActiveIndex((prev) => (prev + 1) % testimonials.length);
   const prev = () => setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft") prev();
+    if (e.key === "ArrowRight") next();
+  };
 
   const active = testimonials[activeIndex];
 
@@ -59,21 +67,31 @@ const Testimonials = () => {
         </div>
 
         {/* Main Card */}
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
+        <div
+          className="max-w-4xl mx-auto"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Customer testimonials"
+          onKeyDown={handleKeyDown}
+          tabIndex={0}
+        >
+          <div
+            className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden"
+            aria-live="polite"
+          >
             <div className="grid grid-cols-1 md:grid-cols-2">
               {/* Image */}
               <div className="relative aspect-square md:aspect-auto md:min-h-[400px] bg-gray-50 overflow-hidden">
                 <img
                   src={active.image}
                   alt={`${active.name}'s skin transformation using ${active.product}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
-                {(active.id === 1 || active.id === 3) && (
-  <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
-    Before & After
-  </div>
-)}
+                {active.isBeforeAfter && (
+                  <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
+                    Before & After
+                  </div>
+                )}
                 <div className="absolute bottom-4 right-4 bg-[#2E2E2E]/80 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-white">
                   {active.product}
                 </div>
@@ -83,7 +101,6 @@ const Testimonials = () => {
               <div className="p-8 md:p-10 flex flex-col justify-center">
                 <Quote className="w-8 h-8 text-[#C9A227]/30 mb-4" aria-hidden="true" />
 
-                {/* Stars */}
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: active.rating }).map((_, i) => (
                     <Star key={i} className="w-4 h-4 text-[#C9A227] fill-[#C9A227]" aria-hidden="true" />
@@ -91,7 +108,7 @@ const Testimonials = () => {
                 </div>
 
                 <blockquote className="text-gray-700 text-lg leading-relaxed mb-6">
-                  "{active.text}"
+                  {active.text}
                 </blockquote>
 
                 <div className="flex items-center gap-3">
@@ -118,7 +135,6 @@ const Testimonials = () => {
               <ChevronLeft className="w-5 h-5" />
             </button>
 
-            {/* Dots */}
             <div className="flex gap-2">
               {testimonials.map((_, i) => (
                 <button
@@ -129,6 +145,7 @@ const Testimonials = () => {
                     i === activeIndex ? "bg-[#C9A227] w-6" : "bg-gray-300"
                   }`}
                   aria-label={`Go to testimonial ${i + 1}`}
+                  aria-current={i === activeIndex}
                 />
               ))}
             </div>
