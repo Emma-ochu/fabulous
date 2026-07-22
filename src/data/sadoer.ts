@@ -11,7 +11,7 @@ export const sadoerProduct = [
     brand: "SADOER",
     price: 20000,
     image: faceLiftCream,
-    description: "A luxurious face cream enriched with collagen to rejuvenate and hydrate your skin.",
+    description: "A luxurious Body Lotion enriched with collagen to rejuvenate and hydrate your skin.",
   },
 
   {
