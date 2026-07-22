@@ -89,7 +89,7 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-500">WhatsApp</p>
-                  <p className="text-sm text-white group-hover:text-[#C9A227] transition-colors">0805 857 5428</p>
+                  <p className="text-sm text-white group-hover:text-[#C9A227] transition-colors">07048603741</p>
                 </div>
               </a>
 
