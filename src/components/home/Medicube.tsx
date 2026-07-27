@@ -2,6 +2,7 @@ import { medicube, medicubeBenefit } from "../../data/medicube";
 import nightMask from "../../assets/medicube-night-mask.png";
 import medicubeVideo from "../../assets/medicube-video.mp4";
 import beforeAfter from "../../assets/before-after.png";
+import LazyImage from "./LazyImage";
 
 const Medicube = () => {
   return (
@@ -62,11 +63,11 @@ const Medicube = () => {
           <div className="flex justify-center lg:justify-end w-full order-1 lg:order-2">
             <div className="relative w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[520px] aspect-square group">
               <div className="absolute inset-0 bg-[#C9A227]/10 rounded-3xl blur-2xl transition-all duration-500 group-hover:scale-110" />
-              <img
+              <LazyImage
                 src={nightMask}
                 alt="Medicube Kojic Acid Night Wrapping Mask"
-                loading="eager"
-                className="relative w-full h-full object-cover rounded-3xl border-4 border-white shadow-lg transition-all duration-500 ease-out group-hover:scale-[1.03] group-hover:shadow-2xl active:scale-95"
+                className="relative w-full h-full rounded-3xl border-4 border-white shadow-lg group-hover:scale-[1.03] group-hover:shadow-2xl active:scale-95 transition-all duration-500 ease-out"
+                imgClassName="object-cover rounded-3xl"
               />
             </div>
           </div>
@@ -92,11 +93,11 @@ const Medicube = () => {
           {/* Card 1: Before / After */}
           <article className="group bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
             <div className="w-full aspect-video overflow-hidden flex items-center justify-center bg-[#FAF8F4]">
-              <img
+              <LazyImage
                 src={beforeAfter}
                 alt="Before and after using Medicube Night Mask"
-                loading="lazy"
-                className="w-full h-full object-contain group-hover:scale-[1.02] transition-transform duration-500"
+                className="w-full h-full"
+                imgClassName="object-contain group-hover:scale-[1.02] transition-transform duration-500"
               />
             </div>
             <div className="p-6 flex flex-col flex-grow">

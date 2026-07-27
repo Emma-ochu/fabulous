@@ -8,6 +8,8 @@ import Testimonials from "../components/home/Testimonials";
 import Faq from "../components/home/Faq";
 import OrderForm  from "../components/home/OrderForm";
 import Footer from "../components/layout/Footer";
+import ScrollToTop from "../components/home/ScrollToTop";
+import WhyChooseUs from "../components/home/WhyChooseUs";
 const Home = () => {
     return(
         <>
@@ -19,7 +21,9 @@ const Home = () => {
         <Testimonials/>
         <OrderForm/>
         <Faq/>
+        <WhyChooseUs/>
         <Footer/>
+        <ScrollToTop/>
         </>
     );
 };

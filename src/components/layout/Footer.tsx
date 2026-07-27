@@ -1,5 +1,5 @@
-import { MapPin, Phone, Mail, MessageCircle } from "lucide-react";
-import Logo from "../home/Logo"; // adjust path to match your structure
+import { MapPin, Phone, Mail, MessageCircle, Clock } from "lucide-react";
+import Logo from "../home/Logo";
 
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -25,7 +25,7 @@ const Footer = () => {
 
             <div className="mt-6 flex gap-3">
               <a
-                href="https://wa.me/2348108384751"
+                href="https://wa.me/2347048603741"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#C9A227] hover:border-[#C9A227] transition-all duration-300"
@@ -89,7 +89,7 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-500">WhatsApp</p>
-                  <p className="text-sm text-white group-hover:text-[#C9A227] transition-colors">07048603741</p>
+                  <p className="text-sm text-white group-hover:text-[#C9A227] transition-colors">0704 860 3741</p>
                 </div>
               </a>
 
@@ -112,11 +112,19 @@ const Footer = () => {
                   <p className="text-sm text-gray-300">Enugu, Nigeria</p>
                 </div>
               </div>
-            </div>
 
-            <p className="mt-6 text-xs text-gray-500 leading-relaxed">
-              Available every day to answer your skincare questions and take your orders.
-            </p>
+              {/* Business Hours - Added */}
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                  <Clock className="w-4 h-4 text-gray-400" aria-hidden="true" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">Business Hours</p>
+                  <p className="text-sm text-white">Monday – Saturday</p>
+                  <p className="text-sm text-gray-400">9:00 AM – 6:00 PM</p>
+                </div>
+              </div>
+            </div>
           </div>
 
         </div>
