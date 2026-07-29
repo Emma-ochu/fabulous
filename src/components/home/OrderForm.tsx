@@ -4,9 +4,10 @@ import { CheckCircle, AlertCircle, MessageCircle } from "lucide-react";
 import { featuredProducts } from "../../data/products";
 import { sadoerProduct } from "../../data/sadoer";
 import { CustomProductSelect } from "./CustomProductSelect";
-import CustomStateSelect from "./CustomSttateSelect";
+import { CustomStateSelect } from "./CustomSttateSelect";
+import { normalizeNigerianPhone, formatPhoneDisplay } from "../../utils/phone";
 
-// Safe catalog builder preventing undefined map crashes
+// Safe catalog builder strictly containing Medicube, Featured, and Sadoer
 const safeFeatured = Array.isArray(featuredProducts) ? featuredProducts : [];
 const safeSadoer = Array.isArray(sadoerProduct) ? sadoerProduct : [];
 
@@ -15,26 +16,43 @@ const catalogProducts = [
     id: "medicube-night-mask",
     name: "Medicube Kojic Acid Night Wrapping Mask",
     category: "Medicube",
-    price: 15000,
+    price: 25000,
   },
   ...safeFeatured.map((p) => ({
-    id: `featured-${p.id}`,
+    id: String(p.id).startsWith("featured-") ? String(p.id) : `featured-${p.id}`,
     name: p.name,
     category: p.brand || "Featured",
     price: p.price,
   })),
   ...safeSadoer.map((p) => ({
-    id: `sadoer-${p.id}`,
+    id: String(p.id).startsWith("sadoer-") ? String(p.id) : `sadoer-${p.id}`,
     name: p.name,
     category: "SADOER",
     price: p.price,
   })),
 ];
 
+// Zod Validation Schema with Strict Nigerian Phone Validation
 const orderSchema = z.object({
   name: z.string().trim().min(1, "Full name required"),
-  phone: z.string().trim().min(10, "Valid phone number required"),
-  secondPhone: z.string().optional(),
+  phone: z
+    .string()
+    .trim()
+    .min(1, "Phone number is required")
+    .refine((val) => normalizeNigerianPhone(val).isValid, {
+      message: "Enter a valid 11-digit Nigerian phone number (e.g. 08012345678)",
+    }),
+  secondPhone: z
+    .string()
+    .trim()
+    .optional()
+    .refine(
+      (val) => {
+        if (!val || val.length === 0) return true;
+        return normalizeNigerianPhone(val).isValid;
+      },
+      { message: "Enter a valid 11-digit backup phone number" }
+    ),
   state: z.string().trim().min(1, "State is required"),
   address: z.string().trim().min(5, "Delivery address required"),
   productId: z.string().default(catalogProducts[0]?.id || ""),
@@ -61,21 +79,57 @@ const states = [
   "Yobe", "Zamfara",
 ];
 
-const OrderForm = () => {
+interface OrderFormProps {
+  selectedProductId?: string;
+}
+
+const OrderForm = ({ selectedProductId }: OrderFormProps) => {
   const [formData, setFormData] = useState<OrderForm>(emptyForm);
-  const [errors, setErrors] = useState<Partial<Record<keyof OrderForm, string>>>(
-    {}
+  const [prevSelectedProductId, setPrevSelectedProductId] = useState<string | undefined>(
+    selectedProductId
   );
+  const [errors, setErrors] = useState<Partial<Record<keyof OrderForm, string>>>({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  // Sync auto-selected product when clicked from product sections without triggering cascading renders
+  if (selectedProductId && selectedProductId !== prevSelectedProductId) {
+    setPrevSelectedProductId(selectedProductId);
+    
+    // Resolve matching ID (handles both prefixed and raw numeric/string IDs)
+    const matchedProduct = catalogProducts.find(
+      (p) =>
+        p.id === selectedProductId ||
+        p.id === `featured-${selectedProductId}` ||
+        p.id === `sadoer-${selectedProductId}`
+    );
+
+    setFormData((prev) => ({
+      ...prev,
+      productId: matchedProduct ? matchedProduct.id : selectedProductId,
+    }));
+  }
+
+  // Safe lookup for active product
   const selectedProduct =
-    catalogProducts.find((p) => p.id === formData.productId) || catalogProducts[0];
+    catalogProducts.find(
+      (p) =>
+        p.id === formData.productId ||
+        p.id === `featured-${formData.productId}` ||
+        p.id === `sadoer-${formData.productId}`
+    ) || catalogProducts[0];
+
   const qtyNumber = parseInt(formData.quantity) || 1;
   const totalPrice = selectedProduct ? selectedProduct.price * qtyNumber : 0;
 
   const handleChange = (field: keyof OrderForm, value: string) => {
-    const updated = { ...formData, [field]: value };
+    let formattedValue = value;
+
+    if (field === "phone" || field === "secondPhone") {
+      formattedValue = formatPhoneDisplay(value);
+    }
+
+    const updated = { ...formData, [field]: formattedValue };
     setFormData(updated);
 
     if (hasSubmitted && errors[field]) {
@@ -107,13 +161,19 @@ const OrderForm = () => {
     }
 
     const data = result.data;
+    const phoneNorm = normalizeNigerianPhone(data.phone);
+    const secondPhoneNorm = data.secondPhone
+      ? normalizeNigerianPhone(data.secondPhone)
+      : null;
 
     const message = [
       `🛍️ *NEW ORDER REQUEST* 🛍️`,
       ``,
       `*Name:* ${data.name}`,
-      `*Phone:* ${data.phone}`,
-      data.secondPhone ? `*Second Number:* ${data.secondPhone}` : "",
+      `*Phone:* ${phoneNorm.international}`,
+      secondPhoneNorm?.isValid
+        ? `*Second Number:* ${secondPhoneNorm.international}`
+        : "",
       `*State:* ${data.state}`,
       `*Delivery Address:* ${data.address}`,
       ``,
@@ -196,10 +256,10 @@ const OrderForm = () => {
             )}
           </div>
 
-          {/* Phone */}
+          {/* Primary Phone */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Your Phone / Whatsapp Number <span className="text-red-500">*</span>
+              Your Phone / WhatsApp Number <span className="text-red-500">*</span>
             </label>
             <input
               type="tel"
@@ -208,7 +268,8 @@ const OrderForm = () => {
               className={`w-full px-4 py-3 rounded-xl border ${
                 errors.phone ? "border-red-400 bg-red-50/30" : "border-gray-200"
               } focus:border-[#C9A227] focus:ring-1 focus:ring-[#C9A227] focus:outline-none transition-colors`}
-              placeholder="e.g. 08012345678"
+              placeholder="e.g. 0801 234 5678"
+              maxLength={13}
             />
             {errors.phone && (
               <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
@@ -227,23 +288,35 @@ const OrderForm = () => {
               type="tel"
               value={formData.secondPhone}
               onChange={(e) => handleChange("secondPhone", e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#C9A227] focus:ring-1 focus:ring-[#C9A227] focus:outline-none transition-colors"
-              placeholder="Backup number"
+              className={`w-full px-4 py-3 rounded-xl border ${
+                errors.secondPhone
+                  ? "border-red-400 bg-red-50/30"
+                  : "border-gray-200"
+              } focus:border-[#C9A227] focus:ring-1 focus:ring-[#C9A227] focus:outline-none transition-colors`}
+              placeholder="Backup number e.g. 0901 234 5678"
+              maxLength={13}
             />
+            {errors.secondPhone && (
+              <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
+                <AlertCircle className="w-3.5 h-3.5" /> {errors.secondPhone}
+              </p>
+            )}
           </div>
 
           {/* Custom State Select */}
-          <CustomStateSelect
-            options={states}
-            value={formData.state}
-            onChange={(value) => handleChange("state", value)}
-            error={errors.state}
-          />
-          {errors.state && (
-            <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
-              <AlertCircle className="w-3.5 h-3.5" /> {errors.state}
-            </p>
-          )}
+          <div>
+            <CustomStateSelect
+              options={states}
+              value={formData.state}
+              onChange={(value) => handleChange("state", value)}
+              error={errors.state}
+            />
+            {errors.state && (
+              <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
+                <AlertCircle className="w-3.5 h-3.5" /> {errors.state}
+              </p>
+            )}
+          </div>
 
           {/* Address */}
           <div>
@@ -269,7 +342,7 @@ const OrderForm = () => {
           {/* Custom Product Selector */}
           <CustomProductSelect
             products={catalogProducts}
-            selectedId={formData.productId}
+            selectedId={selectedProduct?.id || formData.productId}
             onSelect={(id) => handleChange("productId", id)}
             error={errors.productId}
           />

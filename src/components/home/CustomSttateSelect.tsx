@@ -24,10 +24,8 @@ export const CustomStateSelect = ({
   const [searchQuery, setSearchQuery] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Safe fallback to prevent runtime crashes if options array is missing
   const safeOptions = Array.isArray(options) ? options : [];
   const filteredOptions = safeOptions.filter((state) =>
-    typeof state === "string" &&
     state.toLowerCase().includes(searchQuery.toLowerCase().trim())
   );
 
@@ -38,7 +36,6 @@ export const CustomStateSelect = ({
     });
   };
 
-  // Close menu when clicking outside component
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -87,10 +84,9 @@ export const CustomStateSelect = ({
         />
       </button>
 
-      {/* Popover Menu */}
+      {/* Dropdown Menu */}
       {isOpen && (
         <div className="absolute z-50 left-0 right-0 mt-2 bg-white border border-gray-100 rounded-2xl shadow-xl p-2 space-y-1">
-          {/* Search Bar */}
           <div className="relative mb-1">
             <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
@@ -103,7 +99,6 @@ export const CustomStateSelect = ({
             />
           </div>
 
-          {/* Options List */}
           <div className="max-h-52 overflow-y-auto space-y-0.5">
             {filteredOptions.length > 0 ? (
               filteredOptions.map((state) => {
@@ -138,5 +133,3 @@ export const CustomStateSelect = ({
     </div>
   );
 };
-
-export default CustomStateSelect;

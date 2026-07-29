@@ -4,7 +4,11 @@ import medicubeVideo from "../../assets/medicube-video.mp4";
 import beforeAfter from "../../assets/before-after.png";
 import LazyImage from "./LazyImage";
 
-const Medicube = () => {
+interface MedicubeProps {
+  onSelectProduct?: (id: string) => void;
+}
+
+const Medicube = ({ onSelectProduct }: MedicubeProps) => {
   return (
     <>
       {/* SECTION 1: Product Spotlight */}
@@ -50,12 +54,13 @@ const Medicube = () => {
 
             {/* Action Buttons */}
             <div className="mt-6">
-              <a
-                href="#order"
-                className="inline-flex text-center bg-[#2E2E2E] text-white px-6 py-3.5 rounded-xl hover:bg-[#C9A227] active:scale-[0.98] transition-all duration-200 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2"
+              <button
+                type="button"
+                onClick={() => onSelectProduct?.(medicube.id || "medicube")}
+                className="inline-flex text-center bg-[#2E2E2E] text-white px-6 py-3.5 rounded-xl hover:bg-[#C9A227] active:scale-[0.98] transition-all duration-200 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2 cursor-pointer"
               >
                 {medicube.button}
-              </a>
+              </button>
             </div>
           </div>
 
