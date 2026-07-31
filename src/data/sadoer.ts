@@ -52,6 +52,6 @@ export const sadoerProduct = [
     image: blue,
     description:
       "A luxurious face cream enriched with collagen to rejuvenate and hydrate your skin.",
-    // inStock: false,
+    inStock: false,
   },
 ];
