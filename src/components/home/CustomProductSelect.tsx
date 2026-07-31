@@ -6,6 +6,7 @@ export interface CatalogProduct {
   name: string;
   category: string;
   price: number;
+  inStock?: boolean;
 }
 
 interface CustomProductSelectProps {
@@ -59,13 +60,18 @@ export const CustomProductSelect = ({
             : "border-gray-200 hover:border-gray-300"
         }`}
       >
-        <div className="flex items-center gap-2.5 truncate pr-2">
+        <div className="flex items-center gap-2 truncate pr-2">
           <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#FAF8F4] text-[#C9A227] border border-[#C9A227]/30 shrink-0">
             {selectedProduct?.category}
           </span>
           <span className="font-semibold text-gray-800 text-sm truncate">
             {selectedProduct?.name}
           </span>
+          {selectedProduct?.inStock === false && (
+            <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-red-100 text-red-600 shrink-0">
+              Out of Stock
+            </span>
+          )}
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
@@ -85,24 +91,38 @@ export const CustomProductSelect = ({
         <div className="absolute z-40 left-0 right-0 mt-2 max-h-64 overflow-y-auto bg-white border border-gray-100 rounded-2xl shadow-xl p-1.5 space-y-1">
           {products.map((product) => {
             const isSelected = product.id === selectedId;
+            const isOutOfStock = product.inStock === false;
+
             return (
               <button
                 key={product.id}
                 type="button"
+                disabled={isOutOfStock}
                 onClick={() => {
-                  onSelect(product.id);
-                  setIsOpen(false);
+                  if (!isOutOfStock) {
+                    onSelect(product.id);
+                    setIsOpen(false);
+                  }
                 }}
                 className={`w-full flex items-center justify-between p-3 rounded-xl transition-all text-left ${
-                  isSelected
+                  isOutOfStock
+                    ? "opacity-50 cursor-not-allowed bg-gray-50/60 text-gray-400"
+                    : isSelected
                     ? "bg-[#FAF8F4] text-gray-900 font-semibold"
                     : "hover:bg-gray-50 text-gray-700"
                 }`}
               >
                 <div className="flex flex-col gap-0.5 pr-2">
-                  <span className="text-xs font-medium text-gray-800 line-clamp-1">
-                    {product.name}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs font-medium line-clamp-1">
+                      {product.name}
+                    </span>
+                    {isOutOfStock && (
+                      <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-red-100 text-red-600 shrink-0">
+                        Out of Stock
+                      </span>
+                    )}
+                  </div>
                   <span className="text-[10px] uppercase font-bold text-[#C9A227]">
                     {product.category}
                   </span>
@@ -112,7 +132,7 @@ export const CustomProductSelect = ({
                   <span className="text-xs font-bold text-gray-900">
                     ₦{product.price.toLocaleString()}
                   </span>
-                  {isSelected ? (
+                  {isSelected && !isOutOfStock ? (
                     <Check className="w-4 h-4 text-[#C9A227]" />
                   ) : (
                     <div className="w-4 h-4" />

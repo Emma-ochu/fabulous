@@ -4,7 +4,7 @@ import { CheckCircle, AlertCircle, MessageCircle } from "lucide-react";
 import { featuredProducts } from "../../data/products";
 import { sadoerProduct } from "../../data/sadoer";
 import { CustomProductSelect } from "./CustomProductSelect";
-import { CustomStateSelect } from "./CustomSttateSelect";
+import { CustomStateSelect } from "./CustomStateSelect";
 import { normalizeNigerianPhone, formatPhoneDisplay } from "../../utils/phone";
 
 // Safe catalog builder strictly containing Medicube, Featured, and Sadoer
@@ -17,22 +17,25 @@ const catalogProducts = [
     name: "Medicube Kojic Acid Night Wrapping Mask",
     category: "Medicube",
     price: 25000,
+    inStock: true,
   },
   ...safeFeatured.map((p) => ({
     id: String(p.id).startsWith("featured-") ? String(p.id) : `featured-${p.id}`,
     name: p.name,
     category: p.brand || "Featured",
     price: p.price,
+    inStock: p.inStock ?? true,
   })),
   ...safeSadoer.map((p) => ({
     id: String(p.id).startsWith("sadoer-") ? String(p.id) : `sadoer-${p.id}`,
     name: p.name,
     category: "SADOER",
     price: p.price,
+    inStock: p.inStock ?? true,
   })),
 ];
 
-// Zod Validation Schema with Strict Nigerian Phone Validation
+// Zod Validation Schema
 const orderSchema = z.object({
   name: z.string().trim().min(1, "Full name required"),
   phone: z
@@ -56,7 +59,12 @@ const orderSchema = z.object({
   state: z.string().trim().min(1, "State is required"),
   address: z.string().trim().min(5, "Delivery address required"),
   productId: z.string().default(catalogProducts[0]?.id || ""),
-  quantity: z.string().default("1"),
+  quantity: z
+    .string()
+    .default("1")
+    .refine((val) => !isNaN(parseInt(val)) && parseInt(val) >= 1, {
+      message: "Quantity must be at least 1 unit",
+    }),
 });
 
 type OrderForm = z.infer<typeof orderSchema>;
@@ -85,29 +93,33 @@ interface OrderFormProps {
 
 const OrderForm = ({ selectedProductId }: OrderFormProps) => {
   const [formData, setFormData] = useState<OrderForm>(emptyForm);
-  const [prevSelectedProductId, setPrevSelectedProductId] = useState<string | undefined>(
-    selectedProductId
-  );
+  const [isCustomQty, setIsCustomQty] = useState(false);
+  const [prevSelectedProductId, setPrevSelectedProductId] = useState<string | undefined>(undefined);
   const [errors, setErrors] = useState<Partial<Record<keyof OrderForm, string>>>({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  // Sync auto-selected product when clicked from product sections without triggering cascading renders
-  if (selectedProductId && selectedProductId !== prevSelectedProductId) {
+  // Sync auto-selected product during render when selectedProductId changes
+  if (selectedProductId !== prevSelectedProductId) {
     setPrevSelectedProductId(selectedProductId);
-    
-    // Resolve matching ID (handles both prefixed and raw numeric/string IDs)
-    const matchedProduct = catalogProducts.find(
-      (p) =>
-        p.id === selectedProductId ||
-        p.id === `featured-${selectedProductId}` ||
-        p.id === `sadoer-${selectedProductId}`
-    );
 
-    setFormData((prev) => ({
-      ...prev,
-      productId: matchedProduct ? matchedProduct.id : selectedProductId,
-    }));
+    if (selectedProductId) {
+      const matchedProduct = catalogProducts.find(
+        (p) =>
+          p.id === selectedProductId ||
+          p.id === `featured-${selectedProductId}` ||
+          p.id === `sadoer-${selectedProductId}`
+      );
+
+      const nextProductId = matchedProduct ? matchedProduct.id : selectedProductId;
+
+      if (formData.productId !== nextProductId) {
+        setFormData((prev) => ({
+          ...prev,
+          productId: nextProductId,
+        }));
+      }
+    }
   }
 
   // Safe lookup for active product
@@ -119,7 +131,7 @@ const OrderForm = ({ selectedProductId }: OrderFormProps) => {
         p.id === `sadoer-${formData.productId}`
     ) || catalogProducts[0];
 
-  const qtyNumber = parseInt(formData.quantity) || 1;
+  const qtyNumber = Math.max(1, parseInt(formData.quantity) || 1);
   const totalPrice = selectedProduct ? selectedProduct.price * qtyNumber : 0;
 
   const handleChange = (field: keyof OrderForm, value: string) => {
@@ -140,6 +152,7 @@ const OrderForm = ({ selectedProductId }: OrderFormProps) => {
   const handleReset = () => {
     setSubmitted(false);
     setHasSubmitted(false);
+    setIsCustomQty(false);
     setFormData(emptyForm);
     setErrors({});
   };
@@ -167,25 +180,25 @@ const OrderForm = ({ selectedProductId }: OrderFormProps) => {
       : null;
 
     const message = [
-      `🛍️ *NEW ORDER REQUEST* 🛍️`,
+      `\u{1F4E6} *NEW ORDER REQUEST*`,
       ``,
-      `*Name:* ${data.name}`,
-      `*Phone:* ${phoneNorm.international}`,
+      `*Customer Details:*`,
+      `• Name: ${data.name}`,
+      `• Phone: ${phoneNorm.international}`,
       secondPhoneNorm?.isValid
-        ? `*Second Number:* ${secondPhoneNorm.international}`
+        ? `• Backup Phone: ${secondPhoneNorm.international}`
         : "",
-      `*State:* ${data.state}`,
-      `*Delivery Address:* ${data.address}`,
+      `• State: ${data.state}`,
+      `• Delivery Address: ${data.address}`,
       ``,
-      `*Product:* ${selectedProduct?.name || "Selected Item"} (${
+      `*Order Summary:*`,
+      `• Product: ${selectedProduct?.name || "Selected Item"} (${
         selectedProduct?.category || "General"
       })`,
-      `*Quantity:* ${data.quantity} ${
-        parseInt(data.quantity) === 1 ? "unit" : "units"
-      }`,
-      `*Total Amount:* ₦${totalPrice.toLocaleString()}`,
+      `• Quantity: ${qtyNumber} ${qtyNumber === 1 ? "unit" : "units"}`,
+      `• Total Amount: ₦${totalPrice.toLocaleString()}`,
       ``,
-      `Please confirm availability and delivery timelines.`,
+      `Please confirm availability and delivery timelines. Thank you!`,
     ]
       .filter(Boolean)
       .join("\n");
@@ -347,27 +360,98 @@ const OrderForm = ({ selectedProductId }: OrderFormProps) => {
             error={errors.productId}
           />
 
-          {/* Quantity Selection */}
+          {/* Luxury Skincare Standard Quantity Selector */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              How many would you like? <span className="text-red-500">*</span>
-            </label>
-            <div className="grid grid-cols-4 gap-2">
-              {["1", "2", "3", "4"].map((qty) => (
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block text-sm font-medium text-gray-700">
+                Quantity <span className="text-red-500">*</span>
+              </label>
+              {isCustomQty && (
                 <button
-                  key={qty}
                   type="button"
-                  onClick={() => handleChange("quantity", qty)}
-                  className={`py-2.5 rounded-xl border text-sm font-semibold transition-all ${
-                    formData.quantity === qty
+                  onClick={() => {
+                    setIsCustomQty(false);
+                    handleChange("quantity", "1");
+                  }}
+                  className="text-xs font-medium text-[#C9A227] hover:underline transition-all"
+                >
+                  ← Back to options
+                </button>
+              )}
+            </div>
+
+            {!isCustomQty ? (
+              <div className="grid grid-cols-5 gap-2">
+                {["1", "2", "3", "4"].map((q) => {
+                  const isSelected = formData.quantity === q;
+                  return (
+                    <button
+                      key={q}
+                      type="button"
+                      onClick={() => handleChange("quantity", q)}
+                      className={`py-3 rounded-xl border text-sm font-medium transition-all duration-150 ${
+                        isSelected
+                          ? "border-[#C9A227] bg-[#C9A227] text-white shadow-sm font-semibold"
+                          : "border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50"
+                      }`}
+                    >
+                      {q} {q === "1" ? "Unit" : "Units"}
+                    </button>
+                  );
+                })}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsCustomQty(true);
+                    if (["1", "2", "3", "4"].includes(formData.quantity)) {
+                      handleChange("quantity", "5");
+                    }
+                  }}
+                  className={`py-3 rounded-xl border text-xs font-semibold transition-all duration-150 ${
+                    parseInt(formData.quantity) >= 5
                       ? "border-[#C9A227] bg-[#C9A227] text-white shadow-sm"
-                      : "border-gray-200 text-gray-700 hover:border-gray-300"
+                      : "border-gray-200 bg-gray-50/80 text-gray-600 hover:border-gray-300 hover:bg-gray-100"
                   }`}
                 >
-                  {qty} {qty === "1" ? "Unit" : "Units"}
+                  5+ Custom
                 </button>
-              ))}
-            </div>
+              </div>
+            ) : (
+              <div className="relative">
+                <input
+                  type="number"
+                  min="1"
+                  value={formData.quantity}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === "" || /^\d+$/.test(val)) {
+                      handleChange("quantity", val);
+                    }
+                  }}
+                  onBlur={() => {
+                    if (!formData.quantity || parseInt(formData.quantity) < 1) {
+                      handleChange("quantity", "1");
+                    }
+                  }}
+                  placeholder="Enter number of units"
+                  className={`w-full px-4 py-3 rounded-xl border ${
+                    errors.quantity
+                      ? "border-red-400 bg-red-50/30"
+                      : "border-gray-200"
+                  } focus:border-[#C9A227] focus:ring-1 focus:ring-[#C9A227] focus:outline-none transition-colors text-sm font-medium text-gray-800`}
+                  autoFocus
+                />
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400 pointer-events-none">
+                  {parseInt(formData.quantity) === 1 ? "Unit" : "Units"}
+                </span>
+              </div>
+            )}
+
+            {errors.quantity && (
+              <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
+                <AlertCircle className="w-3.5 h-3.5" /> {errors.quantity}
+              </p>
+            )}
           </div>
 
           {/* Live Order Summary */}

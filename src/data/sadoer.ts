@@ -5,15 +5,16 @@ import blue from "../assets/blue.png";
 import set from "../assets/whiten.png";
 
 export const sadoerProduct = [
-   {
+  {
     id: 1,
     name: "Collagen Body Lotion",
     brand: "SADOER",
     price: 20000,
     image: faceLiftCream,
-    description: "A luxurious Body Lotion enriched with collagen to rejuvenate and hydrate your skin.",
+    description:
+      "A luxurious Body Lotion enriched with collagen to rejuvenate and hydrate your skin.",
+    inStock: false,
   },
-
   {
     id: 2,
     name: "Collagen Face Serum",
@@ -22,8 +23,8 @@ export const sadoerProduct = [
     image: faceLiftSerum,
     description:
       "A potent serum infused with collagen to help reduce the appearance of fine lines and wrinkles, promoting a youthful complexion.",
+    inStock: false,
   },
-
   {
     id: 3,
     name: "Collagen Face Cream",
@@ -32,24 +33,25 @@ export const sadoerProduct = [
     image: faceCream,
     description:
       "A nourishing skincare cream designed to moisturize and promote healthier-looking skin.",
+    inStock: false,
   },
-
   {
     id: 4,
     name: "WHITEN ANTI-AGING",
     brand: "SADOER",
     price: 40000,
     image: set,
-    description:
-    "Collagen Firming radiance 6-pieces set",
+    description: "Collagen Firming radiance 6-pieces set",
+    inStock: false,
   },
-
   {
     id: 5,
     name: "Sadoer Repair cream",
     brand: "SADOER",
     price: 8000,
-    image:blue,
+    image: blue,
     description:
-    "A luxurious face cream enriched with collagen to rejuvenate and hydrate your skin.",  }
+      "A luxurious face cream enriched with collagen to rejuvenate and hydrate your skin.",
+    // inStock: false,
+  },
 ];
