@@ -11,7 +11,7 @@ import { normalizeNigerianPhone, formatPhoneDisplay } from "../../utils/phone";
 const safeFeatured = Array.isArray(featuredProducts) ? featuredProducts : [];
 const safeSadoer = Array.isArray(sadoerProduct) ? sadoerProduct : [];
 
-const catalogProducts = [
+const rawCatalog = [
   {
     id: "medicube-night-mask",
     name: "Medicube Kojic Acid Night Wrapping Mask",
@@ -34,6 +34,14 @@ const catalogProducts = [
     inStock: p.inStock ?? true,
   })),
 ];
+
+const catalogProducts = rawCatalog.filter(
+  (product, index, self) =>
+    index ===
+    self.findIndex(
+      (p) => p.name.toLowerCase().trim() === product.name.toLowerCase().trim()
+    )
+);
 
 // Zod Validation Schema
 const orderSchema = z.object({

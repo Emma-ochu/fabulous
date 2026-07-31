@@ -46,7 +46,7 @@ export const featuredProducts: Product[] = [
     description:
       "Helps reduce the appearance of all types of scars with consistent use. Fades acne scars and dark spots. Smooths and nourishes the skin. Suitable for daily use.",
     badge: "Best Seller",
-    inStock: true,
+    inStock: false, // Marked out of stock
   },
   {
     id: 4,
