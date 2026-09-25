@@ -41,7 +41,10 @@ const Testimonials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const next = () => setActiveIndex((prev) => (prev + 1) % testimonials.length);
-  const prev = () => setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  const prev = () =>
+    setActiveIndex(
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length,
+    );
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowLeft") prev();
@@ -51,73 +54,87 @@ const Testimonials = () => {
   const active = testimonials[activeIndex];
 
   return (
-    <section id="testimonials" className="bg-[#FAF8F4] py-20">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-16">
+    <section id='testimonials' className='bg-[#FAF8F4] py-20'>
+      <div className='max-w-[1400px] mx-auto px-6 md:px-16'>
         {/* Header */}
-        <div className="text-center mb-14">
-          <p className="uppercase tracking-[0.3em] text-sm text-[#C9A227]">
+        <div className='text-center mb-14'>
+          <p className='uppercase tracking-[0.3em] text-sm text-[#C9A227]'>
             Real Results
           </p>
-          <h2 className="mt-4 font-serif text-4xl font-normal text-[#2E2E2E]">
+          <h2 className='mt-4 font-serif text-4xl font-normal text-[#2E2E2E]'>
             Reviews From Customers
           </h2>
-          <p className="mt-4 text-gray-600 max-w-xl mx-auto">
-            See the transformations our customers are experiencing with authentic Korean skincare.
+          <p className='mt-4 text-gray-600 max-w-xl mx-auto'>
+            See the transformations our customers are experiencing with
+            authentic Korean skincare.
           </p>
         </div>
 
         {/* Main Card */}
         <div
-          className="max-w-4xl mx-auto"
-          role="region"
-          aria-roledescription="carousel"
-          aria-label="Customer testimonials"
+          className='max-w-4xl mx-auto'
+          role='region'
+          aria-roledescription='carousel'
+          aria-label='Customer testimonials'
           onKeyDown={handleKeyDown}
           tabIndex={0}
         >
           <div
-            className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden"
-            aria-live="polite"
+            className='bg-white rounded-3xl shadow-luxury-card border border-[#EDE7DF] overflow-hidden'
+            aria-live='polite'
           >
-            <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className='grid grid-cols-1 md:grid-cols-2'>
               {/* Image */}
-              <div className="relative aspect-square md:aspect-auto md:min-h-[400px] bg-gray-50 overflow-hidden">
+              <div className='relative aspect-square md:aspect-auto md:min-h-[400px] bg-[#FAF8F4] overflow-hidden'>
                 <img
                   src={active.image}
                   alt={`${active.name}'s skin transformation using ${active.product}`}
-                  className="w-full h-full object-contain"
+                  className='w-full h-full object-contain'
                 />
                 {active.isBeforeAfter && (
-                  <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
+                  <div className='absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-[10px] font-semibold text-gray-500 uppercase tracking-wider'>
                     Before & After
                   </div>
                 )}
-                <div className="absolute bottom-4 right-4 bg-[#2E2E2E]/80 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-white">
+                <div className='absolute bottom-4 right-4 bg-[#2E2E2E]/80 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-white'>
                   {active.product}
                 </div>
               </div>
 
               {/* Content */}
-              <div className="p-8 md:p-10 flex flex-col justify-center">
-                <Quote className="w-8 h-8 text-[#C9A227]/30 mb-4" aria-hidden="true" />
+              <div className='p-8 md:p-10 flex flex-col justify-center'>
+                <Quote
+                  className='w-8 h-8 text-[#C9A227]/30 mb-4'
+                  aria-hidden='true'
+                />
 
-                <div className="flex gap-1 mb-4">
+                <div className='flex gap-1 mb-4'>
                   {Array.from({ length: active.rating }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-[#C9A227] fill-[#C9A227]" aria-hidden="true" />
+                    <Star
+                      key={i}
+                      className='w-4 h-4 text-[#C9A227] fill-[#C9A227]'
+                      aria-hidden='true'
+                    />
                   ))}
                 </div>
 
-                <blockquote className="text-gray-700 text-lg leading-relaxed mb-6">
+                <span className='w-fit mb-4 inline-flex items-center rounded-full border border-[#C9A227]/25 bg-[#C9A227]/10 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#9A7812]'>
+                  Verified buyer
+                </span>
+
+                <blockquote className='text-gray-700 text-lg leading-relaxed mb-6'>
                   {active.text}
                 </blockquote>
 
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#C9A227]/10 flex items-center justify-center text-sm font-bold text-[#C9A227]">
+                <div className='flex items-center gap-3'>
+                  <div className='w-10 h-10 rounded-full bg-[#C9A227]/10 flex items-center justify-center text-sm font-bold text-[#C9A227]'>
                     {active.name.charAt(0)}
                   </div>
                   <div>
-                    <p className="font-semibold text-[#2E2E2E]">{active.name}</p>
-                    <p className="text-sm text-gray-500">{active.location}</p>
+                    <p className='font-semibold text-[#2E2E2E]'>
+                      {active.name}
+                    </p>
+                    <p className='text-sm text-gray-500'>{active.location}</p>
                   </div>
                 </div>
               </div>
@@ -125,21 +142,21 @@ const Testimonials = () => {
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center justify-center gap-4 mt-8">
+          <div className='flex items-center justify-center gap-4 mt-8'>
             <button
-              type="button"
+              type='button'
               onClick={prev}
-              className="p-3 rounded-full bg-white border border-gray-200 hover:border-[#C9A227] hover:text-[#C9A227] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227]"
-              aria-label="Previous testimonial"
+              className='p-3 rounded-full bg-white border border-gray-200 hover:border-[#C9A227] hover:text-[#C9A227] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227]'
+              aria-label='Previous testimonial'
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className='w-5 h-5' />
             </button>
 
-            <div className="flex gap-2">
+            <div className='flex gap-2'>
               {testimonials.map((_, i) => (
                 <button
                   key={i}
-                  type="button"
+                  type='button'
                   onClick={() => setActiveIndex(i)}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     i === activeIndex ? "bg-[#C9A227] w-6" : "bg-gray-300"
@@ -151,31 +168,31 @@ const Testimonials = () => {
             </div>
 
             <button
-              type="button"
+              type='button'
               onClick={next}
-              className="p-3 rounded-full bg-white border border-gray-200 hover:border-[#C9A227] hover:text-[#C9A227] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227]"
-              aria-label="Next testimonial"
+              className='p-3 rounded-full bg-white border border-gray-200 hover:border-[#C9A227] hover:text-[#C9A227] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227]'
+              aria-label='Next testimonial'
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className='w-5 h-5' />
             </button>
           </div>
         </div>
 
         {/* Trust Badges */}
-        <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-center">
+        <div className='mt-16 flex flex-wrap items-center justify-center gap-8 text-center'>
           <div>
-            <p className="text-3xl font-serif text-[#2E2E2E]">500+</p>
-            <p className="text-sm text-gray-500 mt-1">Happy Customers</p>
+            <p className='text-3xl font-serif text-[#2E2E2E]'>500+</p>
+            <p className='text-sm text-gray-500 mt-1'>Happy Customers</p>
           </div>
-          <div className="w-px h-10 bg-gray-200 hidden sm:block" />
+          <div className='w-px h-10 bg-gray-200 hidden sm:block' />
           <div>
-            <p className="text-3xl font-serif text-[#2E2E2E]">4.9</p>
-            <p className="text-sm text-gray-500 mt-1">Average Rating</p>
+            <p className='text-3xl font-serif text-[#2E2E2E]'>4.9</p>
+            <p className='text-sm text-gray-500 mt-1'>Average Rating</p>
           </div>
-          <div className="w-px h-10 bg-gray-200 hidden sm:block" />
+          <div className='w-px h-10 bg-gray-200 hidden sm:block' />
           <div>
-            <p className="text-3xl font-serif text-[#2E2E2E]">100%</p>
-            <p className="text-sm text-gray-500 mt-1">Authentic Products</p>
+            <p className='text-3xl font-serif text-[#2E2E2E]'>100%</p>
+            <p className='text-sm text-gray-500 mt-1'>Authentic Products</p>
           </div>
         </div>
       </div>
