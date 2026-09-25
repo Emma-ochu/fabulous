@@ -1,5 +1,5 @@
 import { sadoerProduct } from "../../data/sadoer";
-import { ShoppingBag } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import LazyImage from "./LazyImage";
 
 interface SadoerProps {
@@ -91,8 +91,8 @@ const Sadoer = ({ onSelectProduct }: SadoerProps) => {
                       onClick={() => onSelectProduct?.(`sadoer-${product.id}`)}
                       className='inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-stone-900 hover:text-white hover:bg-[#1C1C1C] border border-[#C9A227] px-3.5 py-2.5 rounded-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2 cursor-pointer'
                     >
-                      <ShoppingBag className='w-4 h-4' aria-hidden='true' />
-                      Shop On WhatsApp
+                      <ArrowRight className='w-4 h-4' aria-hidden='true' />
+                      View product
                     </button>
                   }
                 </div>
