@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ShoppingBag } from "lucide-react";
-import faqImage from "../../assets/image.webp";
+import medicubeVideo from "../../assets/medicube-video.mp4";
 
 const faqs = [
   {
@@ -89,12 +89,18 @@ const FAQ = () => {
           <div className="lg:sticky lg:top-24">
             <div className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
               <div className="aspect-[4/5] w-full overflow-hidden bg-gray-50">
-                <img
-                  src={faqImage}
-                  alt="Happy customer with Medicube product"
-                  loading="lazy"
-                  className="w-full h-full object-contain"
-                />
+                <video
+                  autoPlay
+                  controls
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="h-full w-full object-contain"
+                >
+                  <source src={medicubeVideo} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </div>
               <div className="p-6 md:p-8 text-center">
                 <h3 className="font-serif text-2xl md:text-3xl font-normal text-[#2E2E2E] leading-tight">

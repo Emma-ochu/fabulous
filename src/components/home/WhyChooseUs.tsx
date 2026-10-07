@@ -4,7 +4,6 @@ import {
   MessageCircle,
   Sparkles,
   Lock,
-  Star,
 } from "lucide-react";
 
 const trustFeatures = [
@@ -113,27 +112,24 @@ const WhyChooseUs = () => {
           </div>
         </div>
 
-        {/* Reassurance Box */}
+        {/* WhatsApp support CTA */}
         <div className='mt-10 max-w-2xl mx-auto bg-[#1C1C1C] rounded-3xl p-8 md:p-10 text-center border border-[#C9A227]/25 shadow-gold-subtle'>
-          {/* Stars */}
-          <div className='flex justify-center gap-1 mb-4'>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className='w-5 h-5 text-[#C9A227] fill-[#C9A227]' />
-            ))}
-          </div>
-
           <p className='text-white text-lg font-medium mb-2'>
-            Join hundreds of happy customers across Nigeria
+            Need help choosing a product?
           </p>
           <p className='text-gray-400 text-sm'>
-            Fill in the form below and we'll confirm your order on WhatsApp
+            Message us on WhatsApp for product recommendations, availability,
+            or delivery questions.
           </p>
 
           <a
-            href='#order'
+            href='https://wa.me/2347048603741?text=Hi%2C%20I%20need%20help%20choosing%20a%20skincare%20product.'
+            target='_blank'
+            rel='noopener noreferrer'
             className='mt-6 inline-flex items-center gap-2 bg-[#C9A227] text-white px-8 py-3.5 rounded-xl hover:bg-[#b08d1f] active:scale-[0.98] transition-all duration-200 font-semibold text-sm'
           >
-            Order Now
+            <MessageCircle className='w-4 h-4' />
+            Chat on WhatsApp
           </a>
         </div>
       </div>
