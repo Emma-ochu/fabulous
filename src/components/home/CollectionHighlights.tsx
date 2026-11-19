@@ -12,7 +12,7 @@ const CollectionHighlights = () => {
   return (
     <section className='border-y border-[#E7DED2] bg-[#F4EFEA]'>
       <div className='mx-auto grid max-w-7xl gap-8 px-6 py-14 md:grid-cols-2 md:px-10 md:py-20'>
-        <article className='grid items-center gap-6 rounded-3xl border border-[#D8CDBE] bg-[#FFFDF9] p-5 sm:grid-cols-[0.8fr_1fr] sm:p-7'>
+        <article id='medicube' className='grid items-center gap-6 rounded-3xl border border-[#D8CDBE] bg-[#FFFDF9] p-5 sm:grid-cols-[0.8fr_1fr] sm:p-7 scroll-mt-24'>
           <LazyImage
             src={medicube.image}
             alt={medicube.name}
@@ -38,7 +38,7 @@ const CollectionHighlights = () => {
             </Link>
           </div>
         </article>
-        <article className='grid items-center gap-6 rounded-3xl border border-[#D8CDBE] bg-[#FFFDF9] p-5 sm:grid-cols-[0.8fr_1fr] sm:p-7'>
+        <article id='sadoer' className='grid items-center gap-6 rounded-3xl border border-[#D8CDBE] bg-[#FFFDF9] p-5 sm:grid-cols-[0.8fr_1fr] sm:p-7 scroll-mt-24'>
           <LazyImage
             src={sadoer.image}
             alt={sadoer.name}

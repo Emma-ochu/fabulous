@@ -1,5 +1,6 @@
 import { heroContent, heroBenefits } from "../../data/hero";
 import { CheckCircle2 } from "lucide-react";
+import { Link } from "react-router-dom";
 import heroImage from "../../assets/Woman.png";
 
 const Hero = () => {
@@ -69,12 +70,12 @@ const Hero = () => {
             >
               {heroContent.primaryButton}
             </a>
-            <a
-              href="#products"
+            <Link
+              to="/products"
               className="inline-flex items-center justify-center flex-1 sm:flex-initial text-center px-6 py-3.5 bg-transparent text-[#C9A227] border-2 border-[#C9A227] rounded-xl hover:bg-[#C9A227] hover:text-white active:scale-[0.98] transition-all duration-300 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2"
             >
               {heroContent.secondaryButton}
-            </a>
+            </Link>
           </div>
         </div>
 

@@ -11,8 +11,10 @@ export const normalizeNigerianPhone = (phone: string) => {
   // Strip all non-digit characters
   let digits = phone.replace(/\D/g, "");
 
-  // Convert 234... prefix to 0... for local normalization
-  if (digits.startsWith("234") && digits.length === 13) {
+  // Convert 234... or 2340... prefix to 0... for local normalization
+  if (digits.startsWith("2340") && digits.length === 14) {
+    digits = digits.slice(3);
+  } else if (digits.startsWith("234") && digits.length === 13) {
     digits = "0" + digits.slice(3);
   }
 

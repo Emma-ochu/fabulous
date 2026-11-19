@@ -1,5 +1,6 @@
-import { featuredProducts } from "../../data/products";
+import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { productCatalog } from "../../data/catalog";
 import LazyImage from "./LazyImage";
 
 interface FeaturedProductsProps {
@@ -7,6 +8,10 @@ interface FeaturedProductsProps {
 }
 
 const FeaturedProducts = ({ onSelectProduct }: FeaturedProductsProps) => {
+  const featured = productCatalog
+    .filter((product) => product.id.startsWith("featured-"))
+    .slice(0, 4);
+
   return (
     <section id='products' className='max-w-7xl mx-auto px-6 py-20'>
       {/* Header */}
@@ -25,7 +30,7 @@ const FeaturedProducts = ({ onSelectProduct }: FeaturedProductsProps) => {
 
       {/* Grid */}
       <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-4'>
-        {featuredProducts.slice(0, 4).map((product) => {
+        {featured.map((product) => {
           const isOutOfStock = product.inStock === false;
 
           return (
@@ -34,37 +39,41 @@ const FeaturedProducts = ({ onSelectProduct }: FeaturedProductsProps) => {
               className='group bg-white rounded-3xl shadow-sm overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-300'
             >
               {/* Image + Badges */}
-              <div className='relative aspect-square w-full overflow-hidden bg-gray-50'>
-                {product.badge && (
-                  <span className='absolute top-3 left-3 z-10 bg-[#C9A227] text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm'>
-                    {product.badge}
-                  </span>
-                )}
+              <Link to={`/products/${product.slug}`} className='block'>
+                <div className='relative aspect-square w-full overflow-hidden bg-gray-50'>
+                  {product.badge && (
+                    <span className='absolute top-3 left-3 z-10 bg-[#C9A227] text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm'>
+                      {product.badge}
+                    </span>
+                  )}
 
-                {isOutOfStock && (
-                  <span className='absolute top-3 right-3 z-10 bg-red-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm'>
-                    Out of Stock
-                  </span>
-                )}
+                  {isOutOfStock && (
+                    <span className='absolute top-3 right-3 z-10 bg-red-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm'>
+                      Out of Stock
+                    </span>
+                  )}
 
-                <LazyImage
-                  src={product.image}
-                  alt={product.name}
-                  className='w-full h-full'
-                  imgClassName={`object-cover transition-transform duration-500 ${
-                    isOutOfStock ? "opacity-75" : "group-hover:scale-105"
-                  }`}
-                />
-              </div>
+                  <LazyImage
+                    src={product.image}
+                    alt={product.name}
+                    className='w-full h-full'
+                    imgClassName={`object-cover transition-transform duration-500 ${
+                      isOutOfStock ? "opacity-75" : "group-hover:scale-105"
+                    }`}
+                  />
+                </div>
+              </Link>
 
               {/* Details */}
               <div className='p-6 flex flex-col flex-grow'>
                 <span className='text-xs text-gray-400 uppercase tracking-wider'>
                   {product.brand}
                 </span>
-                <h3 className='mt-1 font-semibold text-gray-800 text-lg line-clamp-1'>
-                  {product.name}
-                </h3>
+                <Link to={`/products/${product.slug}`}>
+                  <h3 className='mt-1 font-semibold text-gray-800 text-lg line-clamp-1 hover:text-[#C9A227] transition-colors'>
+                    {product.name}
+                  </h3>
+                </Link>
                 <p className='mt-2 text-gray-600 text-sm line-clamp-3 flex-grow'>
                   {product.description}
                 </p>
@@ -75,16 +84,14 @@ const FeaturedProducts = ({ onSelectProduct }: FeaturedProductsProps) => {
                   </span>
 
                   {!isOutOfStock ?
-                    <button
-                      type='button'
-                      onClick={() =>
-                        onSelectProduct?.(`featured-${product.id}`)
-                      }
-                      className='inline-flex items-center gap-1.5 text-xs font-medium text-[#C9A227] hover:text-white hover:bg-[#C9A227] border border-[#C9A227] px-3 py-2 rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2 cursor-pointer'
+                    <Link
+                      to={`/products/${product.slug}`}
+                      onClick={() => onSelectProduct?.(product.id)}
+                      className='inline-flex items-center gap-1.5 text-xs font-medium text-[#C9A227] hover:text-white hover:bg-[#C9A227] border border-[#C9A227] px-3 py-2 rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2'
                     >
                       <ArrowRight className='w-3.5 h-3.5' aria-hidden='true' />
                       View product
-                    </button>
+                    </Link>
                   : <button
                       type='button'
                       disabled

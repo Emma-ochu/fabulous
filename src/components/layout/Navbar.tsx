@@ -80,6 +80,9 @@ const Navbar = ({ onOpenCart }: NavbarProps) => {
             <div className='hidden md:block'>
               <CartButton onClick={onOpenCart} />
             </div>
+            <div className='md:hidden'>
+              <CartButton onClick={onOpenCart} compact />
+            </div>
             <button
               type='button'
               className='md:hidden relative p-2 rounded-full hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] focus-visible:ring-offset-2'
@@ -129,14 +132,6 @@ const Navbar = ({ onOpenCart }: NavbarProps) => {
             </div>
 
             <nav className='px-4 py-6'>
-              <div className='mb-4 px-4'>
-                <CartButton
-                  onClick={() => {
-                    onOpenCart();
-                    closeMenu();
-                  }}
-                />
-              </div>
               <ul className='flex flex-col gap-1'>
                 {navLinks.map(({ name, href }, index) => (
                   <li
